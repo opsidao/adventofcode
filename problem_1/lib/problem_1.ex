@@ -1,18 +1,19 @@
 defmodule Problem1 do
-  @moduledoc """
-  Documentation for Problem1.
-  """
+  def process_file(file_path) do
+    file_path |> read_lines() |> calculate_frequency()
+  end
 
-  @doc """
-  Hello world.
+  def read_lines(file_path) do
+    with {:ok, file_content} <- file_path |> File.read(),
+         lines <- file_content |> String.split()
+    do
+      lines
+    else
+      res -> res
+    end
+  end
 
-  ## Examples
-
-      iex> Problem1.hello()
-      :world
-
-  """
-  def hello do
-    :world
+  def calculate_frequency(input_frequencies) do
+    input_frequencies |> Enum.map(&(String.to_integer(&1))) |> Enum.sum()
   end
 end
