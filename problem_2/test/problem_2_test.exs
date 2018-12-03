@@ -60,4 +60,23 @@ defmodule Problem2Test do
       assert checksum("input.txt") == 6696
     end
   end
+
+  describe "find_ids/1" do
+    import Problem2, only: [find_ids: 1]
+
+    test "calculates the checksum" do
+      box_ids = ~w{abcde fghij klmno pqrst fguij axcye wvxyz}
+      expected_ids = ["fghij", "fguij"]
+
+      assert find_ids(box_ids) == expected_ids
+    end
+  end
+
+  describe "find_box_ids/1" do
+    import Problem2, only: [find_box_ids: 1]
+
+    test "calculates the checksum" do
+      assert find_box_ids("input.txt") == ["bvnfawcnyoeyudzrpgsleimtkj", "bvnfawcnyoeyudzrpgsldimtkj"]
+    end
+  end
 end

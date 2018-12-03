@@ -1,4 +1,16 @@
 defmodule Problem2 do
+  def find_box_ids(file_path) do
+    file_path |> read_lines() |> find_ids()
+  end
+
+  def find_ids(word_list) do
+    word_list |> Enum.filter(fn word_1 ->
+      word_list |> Enum.any?(fn word_2 ->
+        almost_the_same_word?(word_1,word_2)
+      end)
+    end)
+  end
+
   def checksum(file_path) do
     file_path |> read_lines() |> calculate_checksum([2,3])
   end
@@ -41,5 +53,19 @@ defmodule Problem2 do
     else
       res -> res
     end
+  end
+
+  defp almost_the_same_word?(word_1, word_2) do
+    w1gs = word_1 |> String.graphemes
+
+    {_, count} = w1gs |> Enum.reduce({0,0}, fn w1g, {index, count} ->
+      if word_2 |> String.at(index) == w1g do
+        {index + 1, count + 1}
+      else
+        {index + 1, count}
+      end
+    end)
+
+    String.length(word_1) - count == 1
   end
 end
